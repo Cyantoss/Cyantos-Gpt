@@ -5,8 +5,6 @@ import { Configuration, OpenAIApi } from 'openai';
 
 dotenv.config();
 
-console.log(process.env.OPEN_API_KEY)
-
 const configuration = new Configuration({
     apiKey: process.env.OPEN_API_KEY,
 });
@@ -31,7 +29,7 @@ app.post('/', async (req, res) => {
             model: "text-davinci-003",
             prompt: `${prompt}`,
             temperature: 0.5,
-            max_tokens: 250,
+            max_tokens: 2500,
             top_p: 1,
             frequency_penalty: 0.5,
             presence_penalty: 0,
