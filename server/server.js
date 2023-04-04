@@ -34,7 +34,7 @@ function writeHistory(history) {
 
 app.get('/', async (req, res) => {
     res.status(200).send({
-        message: 'Hello World'
+        message: 'Hello Nigga'
     })
 });
 
