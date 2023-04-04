@@ -3,6 +3,7 @@ import user from './assets/user.svg'
 
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
+const submitButton = document.querySelector('#submit-button')
 
 let loadInterval;
 
@@ -66,9 +67,16 @@ const handleSubmit = async (e) => {
     e.preventDefault()
 
     const data = new FormData(form)
+    const inputValue = data.get('prompt').trim();
+
+    // Disable submit button if input is empty
+    if (!inputValue) {
+        submitButton.disabled = true;
+        return;
+    }
 
     // user's chatstripe
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+    chatContainer.innerHTML += chatStripe(false, inputValue)
 
     // to clear the textarea input 
     form.reset()
@@ -92,7 +100,7 @@ const handleSubmit = async (e) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            prompt: data.get('prompt')
+            prompt: inputValue
         })
     })
 
@@ -110,27 +118,11 @@ const handleSubmit = async (e) => {
         messageDiv.innerHTML = "Something went wrong"
         alert(err);
     }
+
+    // Enable submit button after submitting
+    submitButton.disabled = false;
 }
 
 form.addEventListener('submit', handleSubmit)
-
-const textarea = form.querySelector('textarea');
-const sendButton = form.querySelector('button');
-
-if (textarea.value.trim() === '') {
-  sendButton.disabled = true;
-}
-
-textarea.addEventListener('input', () => {
-  if (textarea.value.trim() === '') {
-    sendButton.disabled = true;
-  } else {
-    sendButton.disabled = false;
-  }
-})
-
 form.addEventListener('keyup', (e) => {
-    if (e.keyCode === 13) {
-        handleSubmit(e)
-    }
-})
+    if (e.keyCode === 13)
