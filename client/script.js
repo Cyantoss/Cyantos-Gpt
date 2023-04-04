@@ -113,6 +113,22 @@ const handleSubmit = async (e) => {
 }
 
 form.addEventListener('submit', handleSubmit)
+
+const textarea = form.querySelector('textarea');
+const sendButton = form.querySelector('button');
+
+if (textarea.value.trim() === '') {
+  sendButton.disabled = true;
+}
+
+textarea.addEventListener('input', () => {
+  if (textarea.value.trim() === '') {
+    sendButton.disabled = true;
+  } else {
+    sendButton.disabled = false;
+  }
+})
+
 form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
         handleSubmit(e)
